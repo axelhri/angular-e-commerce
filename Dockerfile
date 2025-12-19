@@ -12,7 +12,7 @@ FROM nginx:1.25-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /app/dist/angular-starter-app/browser /usr/share/nginx/html
+COPY --from=build /app/dist/angular-e-commerce/browser /usr/share/nginx/html
 
 RUN touch /var/run/nginx.pid && \
     chown -R nginx:nginx /var/run/nginx.pid /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
