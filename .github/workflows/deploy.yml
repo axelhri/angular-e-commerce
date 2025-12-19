@@ -1,0 +1,75 @@
+name: Deployment
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get project version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./.docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/${{ secrets.APP_NAME }}:latest
+            ${{ secrets.DOCKER_USERNAME }}/${{ secrets.APP_NAME }}:${{ steps.version.outputs.version }}
+          cache-from: type=gha
+          cache-to: type=gha, mode=max
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          passphrase: ${{ secrets.VPS_PASSPHRASE }}
+          script: |
+            cd /opt/${{ secrets.APP_NAME }} || sudo mkdir -p /opt/${{ secrets.APP_NAME }} && cd /opt/${{ secrets.APP_NAME }}
+
+            cat > .env << EOF
+            APP_NAME=${{ secrets.APP_NAME }}
+            DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
+            APP_DOMAIN=${{ secrets.APP_DOMAIN }}
+            ACME_EMAIL=${{ secrets.ACME_EMAIL }}
+            EOF
+
+            rm compose.prod.yml
+
+            if [ ! -f compose.prod.yml ]; then
+              curl -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" -o compose.prod.yml https://raw.githubusercontent.com/${{ github.repository }}/main/compose.prod.yml
+            fi
+
+            docker compose -f compose.prod.yml --env-file .env pull
+
+            docker compose -f compose.prod.yml --env-file .env down
+
+            docker compose -f compose.prod.yml --env-file .env up -d
+
+            docker image prune -f

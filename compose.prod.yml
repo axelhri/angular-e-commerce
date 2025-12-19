@@ -1,0 +1,30 @@
+services:
+  reverse-proxy:
+    image: traefik:v2.10
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  angular-app:
+    image: ${DOCKER_USERNAME}/${APP_NAME}:latest
+    expose:
+      - "8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.angular.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.angular.entrypoints=websecure"
+      - "traefik.http.routers.angular.tls.certresolver=myresolver"
+      - "traefik.http.services.angular.loadbalancer.server.port=8080"
+    restart: always
