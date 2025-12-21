@@ -9,7 +9,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-starter-app": {
+    "angular-e-commerce": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -70,10 +70,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-starter-app:build:production"
+              "buildTarget": "angular-e-commerce:build:production"
             },
             "development": {
-              "buildTarget": "angular-starter-app:build:development"
+              "buildTarget": "angular-e-commerce:build:development"
             }
           },
           "defaultConfiguration": "development"
