@@ -18,8 +18,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   angular-app:
-    build:
-      context: .
+    image: ${DOCKER_USERNAME}/${APP_NAME}:latest
+    container_name: ${APP_NAME}
     expose:
       - "8080"
     labels:
