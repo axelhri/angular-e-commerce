@@ -18,13 +18,14 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
   angular-app:
-    image: ${DOCKER_USERNAME}/${APP_NAME}:latest
+    build:
+      context: .
     expose:
       - "8080"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.angular.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.angular.rule=Host(`localhost`)"
       - "traefik.http.routers.angular.entrypoints=websecure"
       - "traefik.http.routers.angular.tls.certresolver=myresolver"
-      - "traefik.http.services.angular.loadbalancer.server.port=8080"
+      - "traefik.http.services.angular.loadbalancer.server.port=7979"
     restart: always
