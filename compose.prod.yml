@@ -19,12 +19,13 @@ services:
 
   angular-app:
     image: ${DOCKER_USERNAME}/${APP_NAME}:latest
+    container_name: ${APP_NAME}
     expose:
-      - "8080"
+      - "7979"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.angular.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.angular.rule=Host(`localhost`)"
       - "traefik.http.routers.angular.entrypoints=websecure"
       - "traefik.http.routers.angular.tls.certresolver=myresolver"
-      - "traefik.http.services.angular.loadbalancer.server.port=8080"
+      - "traefik.http.services.angular.loadbalancer.server.port=7979"
     restart: always
