@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://89.168.45.93:8080/api/v1/',
+  apiUrl: 'https://java-e-commerce.duckdns.org/api/v1/',
 };
