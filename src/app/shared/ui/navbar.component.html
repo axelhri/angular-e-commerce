@@ -1,0 +1,8 @@
+<nav>
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <input formControlName="search" type="text" placeholder="Rechercher...">
+    <button type="submit" class="outline-1 p-2">
+      Chercher
+    </button>
+  </form>
+</nav>
