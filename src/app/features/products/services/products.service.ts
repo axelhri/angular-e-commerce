@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environement';
+import { environment } from '../../../../environments/environment';
 import { ApiResponse } from '../../../shared/models/api-response';
 import { PagedResponse } from '../../../shared/models/paged-response';
 import { ProductSummary } from '../models/product-summary';

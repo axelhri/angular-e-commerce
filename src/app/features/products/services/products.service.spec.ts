@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ProductsService } from './products.service';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environement';
+import { environment } from '../../../../environments/environment';
 import { ApiResponse } from '../../../shared/models/api-response';
 import { PagedResponse } from '../../../shared/models/paged-response';
 import { ProductSummary } from '../models/product-summary';
