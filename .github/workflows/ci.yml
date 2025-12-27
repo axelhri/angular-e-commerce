@@ -49,9 +49,12 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.tests=src
             -Dsonar.test.inclusions=**/*.spec.ts
+            -Dsonar.coverage.exclusions=**
+            -Dsonar.qualitygate.wait=true
 
       - name: Build Angular (development)
         run: npm run build -- --configuration=development
 
       - name: Build Angular (production)
         run: npm run build -- --configuration=production
+
