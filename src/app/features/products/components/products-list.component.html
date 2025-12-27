@@ -1,22 +1,35 @@
 <section>
-  <h2>Produits</h2>
 
-  @if (products().length > 0) {
-    <ul>
-      @for (product of products(); track product.product_id) {
-        <li>
-          <h3>{{ product.product_name }}</h3>
-          <img [src]="product.product_image" [alt]="product.product_name" width="150" height="150">
-          <p>
-            Prix :
-            <strong>{{ product.product_price / 100 }} €</strong>
-          </p>
-          <span>rating : {{ product.product_rating }}</span><br>
-          <span>stock : {{ product.product_stock }}</span>
-        </li><br>
-      }
-    </ul>
-  } @else {
-    <p>Aucun produit trouvé.</p>
+  @if (facade.loading()) {
+    <p>loading...</p>
+  }
+
+  @if (facade.error()) {
+    <p class="error">{{ facade.error() }}</p>
+  }
+
+  @if (!facade.loading() && !facade.error()) {
+
+    @if (facade.products().length > 0) {
+
+      <ul>
+        @for (product of facade.products(); track product.product_id) {
+          <li>
+            <h3>{{ product.product_name }}</h3>
+            <img [src]="product.product_image" [alt]="product.product_name" width="150" height="150">
+            <p>
+              Prix :
+              <strong>{{ product.product_price / 100 }} €</strong>
+            </p>
+            <span>rating : {{ product.product_rating }}</span><br>
+            <span>stock : {{ product.product_stock }}</span>
+          </li><br>
+        }
+      </ul>
+
+    } @else {
+      <p>No products found</p>
+    }
+
   }
 </section>
