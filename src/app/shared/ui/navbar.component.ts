@@ -9,18 +9,17 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
+  private readonly router = inject(Router);
+
   readonly searchForm = new FormGroup({
     search: new FormControl('', { nonNullable: true }),
   });
-  private readonly router = inject(Router);
 
-  onSearch() {
-    const term = this.searchForm.controls.search.value.trim();
+  onSearch(): void {
+    const search = this.searchForm.controls.search.value.trim() || null;
+
     this.router.navigate(['/products'], {
-      queryParams: {
-        search: term || null,
-        page: 0,
-      },
+      queryParams: { search, page: 0 },
       queryParamsHandling: 'merge',
     });
   }
