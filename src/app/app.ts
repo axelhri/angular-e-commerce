@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './shared/ui/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html'
+  imports: [RouterOutlet, NavbarComponent],
+  templateUrl: './app.html',
 })
-export class App {
-}
+export class App {}
