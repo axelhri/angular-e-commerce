@@ -1,0 +1,32 @@
+<section class="max-w-[80vw] mx-auto">
+
+  @if (facade.loading()) {
+    <p>loading...</p>
+  }
+
+  @if (facade.error()) {
+    <p class="error">{{ facade.error() }}</p>
+  }
+
+  @if (!facade.loading() && !facade.error()) {
+
+    @if (facade.product()) {
+      <p>{{facade.product()!.product_name}}</p>
+      <p>{{facade.product()!.product_price}}</p>
+      <p>{{facade.product()!.product_description}}</p>
+      <p>{{facade.product()!.product_stock}}</p>
+
+      @for (image of facade.product()!.product_images; track $index) {
+        <img [src]="image.product_images" alt="product image">
+      }
+
+      <p>{{facade.product()!.vendor.vendor_name}}</p>
+      <p>{{facade.product()!.vendor.vendor_rating}}</p>
+      <img [src]="facade.product()!.vendor.vendor_image" alt="product image">
+
+    } @else {
+      <p>No product found</p>
+    }
+
+  }
+</section>
