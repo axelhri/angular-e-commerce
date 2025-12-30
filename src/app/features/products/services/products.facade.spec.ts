@@ -18,6 +18,7 @@ describe('ProductsFacade', () => {
       product_id: '1',
       product_name: 'Test Product',
       product_price: 1000,
+      product_slug: 'slug',
       product_image: 'test.jpg',
       product_rating: 4.5,
       product_stock: 10,
