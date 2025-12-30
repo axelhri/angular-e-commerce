@@ -1,0 +1,10 @@
+<div class="flex items-center text-yellow-500">
+  @for (type of stars(); track $index) {
+    @switch (type) {
+      @case ('full') { <ng-icon name="bootstrapStarFill" class="text-sm" [color]="'var(--color-amber)'" /> }
+      @case ('half') { <ng-icon name="bootstrapStarHalf" class="text-sm" [color]="'var(--color-amber)'" /> }
+      @default { <ng-icon name="bootstrapStar" class="text-sm" [color]="'var(--color-amber)'" /> }
+    }
+  }
+  <span class="ml-2 border text-indigo bg-indigo-50 text-xs font-medium px-1.5 py-0.5 rounded-sm">{{rating()}} out of 5</span>
+</div>
