@@ -15,7 +15,7 @@
       <ul class="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-8 justify-center">
         @for (product of facade.products(); track product.product_id) {
           <li class="w-[14rem]">
-            <a href="/">
+            <a [routerLink]="['/products', product.product_slug]">
               <img [src]="product.product_image" [alt]="product.product_name" class="w-full h-[180px] object-cover block rounded-lg">
             </a>
               <div class="p-2">
