@@ -1,4 +1,4 @@
-<section>
+<section class="max-w-[80vw] mx-auto">
 
   @if (facade.loading()) {
     <p>loading...</p>
@@ -12,18 +12,43 @@
 
     @if (facade.products().length > 0) {
 
-      <ul>
+      <ul class="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-8 justify-center">
         @for (product of facade.products(); track product.product_id) {
-          <li>
-            <h3>{{ product.product_name }}</h3>
-            <img [src]="product.product_image" [alt]="product.product_name" width="150" height="150">
-            <p>
-              Prix :
-              <strong>{{ product.product_price / 100 }} €</strong>
-            </p>
-            <span>rating : {{ product.product_rating }}</span><br>
-            <span>stock : {{ product.product_stock }}</span>
-          </li><br>
+          <li class="w-[14rem]">
+            <a href="/">
+              <img [src]="product.product_image" [alt]="product.product_name" class="w-full h-[180px] object-cover block rounded-lg">
+            </a>
+              <div class="p-2">
+                <div class="flex items-center gap-1 mt-1">
+                  @for (star of getStars(product.product_rating); track $index) {
+
+                    @if (star === 'full') {
+                      <ng-icon name="bootstrapStarFill" class="text-sm" [color]="'var(--color-amber)'" />
+                    }
+
+                    @if (star === 'half') {
+                      <ng-icon name="bootstrapStarHalf" class="text-sm" [color]="'var(--color-amber)'" />
+                    }
+
+                    @if (star === 'empty') {
+                      <ng-icon name="bootstrapStar" class="text-sm" [color]="'var(--color-amber)'" />
+                    }
+
+                  }
+                  <span class="ml-2 border text-indigo bg-indigo-50 text-xs font-medium px-1.5 py-0.5 rounded-sm">{{product.product_rating}} out of 5</span>
+                </div>
+                <a href="/">
+                  <h3 class="text-base text-midnight font-jakarta font-medium">{{ (product.product_name.length > 100)
+                    ? (product.product_name | slice:0:60) + '...'
+                    : product.product_name
+                    }}</h3>
+                </a>
+                <div class="flex justify-between items-center mt-4">
+                  <p class="text-lg font-semibold">{{ product.product_price / 100 | currency:'USD' }}</p>
+                  <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5">Add to Cart</button>
+                </div>
+              </div>
+          </li>
         }
       </ul>
 
