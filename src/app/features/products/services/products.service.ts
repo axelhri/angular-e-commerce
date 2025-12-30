@@ -4,8 +4,9 @@ import { ApiResponse } from '../../../shared/models/api-response';
 import { PagedResponse } from '../../../shared/models/paged-response';
 import { ProductSummary } from '../models/product-summary';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ProductsQuery } from '../models/products-query';
+import { ProductResponse } from '../models/product-response';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +26,11 @@ export class ProductsService {
     });
 
     return this.http.get<ApiResponse<PagedResponse<ProductSummary>>>(this.apiUrl, { params });
+  }
+
+  getProductBySlug(slug: string): Observable<ProductResponse> {
+    return this.http
+      .get<ApiResponse<ProductResponse>>(`${this.apiUrl}/slug/${slug}`)
+      .pipe(map((response) => response.data));
   }
 }
