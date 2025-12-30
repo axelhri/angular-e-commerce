@@ -21,10 +21,7 @@
               <div class="p-2">
                 <app-star-rating [rating]="product.product_rating" />
                 <a href="/">
-                  <h3 class="text-base text-midnight font-jakarta font-medium">{{ (product.product_name.length > 100)
-                    ? (product.product_name | slice:0:60) + '...'
-                    : product.product_name
-                    }}</h3>
+                  <h3 class="text-base text-midnight font-jakarta font-medium">{{product.product_name | truncate:60}}</h3>
                 </a>
                 <div class="flex justify-between items-center mt-4">
                   <p class="text-lg font-semibold">{{ product.product_price | dynamicCurrency:{ fromCents: true } }}</p>
