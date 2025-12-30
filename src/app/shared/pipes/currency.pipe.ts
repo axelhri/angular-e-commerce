@@ -9,8 +9,10 @@ import { LocaleService } from '../services/locale.service';
 export class CurrencyPipe implements PipeTransform {
   private localeService = inject(LocaleService);
 
-  transform(value: number | null | undefined): string {
+  transform(value: number | null | undefined, options?: { fromCents?: boolean }): string {
     if (value == null) return '';
-    return this.localeService.format(value);
+
+    const amount = options?.fromCents ? value / 100 : value;
+    return this.localeService.format(amount);
   }
 }
