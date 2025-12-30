@@ -7,7 +7,7 @@ import { LocaleService } from '../services/locale.service';
   pure: false,
 })
 export class CurrencyPipe implements PipeTransform {
-  private localeService = inject(LocaleService);
+  private readonly localeService = inject(LocaleService);
 
   transform(value: number | null | undefined, options?: { fromCents?: boolean }): string {
     if (value == null) return '';

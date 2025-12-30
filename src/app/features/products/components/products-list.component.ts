@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ProductsFacade } from '../services/products.facade';
-import { StarRatingComponent } from '../../../star-rating/star-rating.component';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { StarRatingComponent } from './star-rating.component';
 
 @Component({
   selector: 'app-products-list',

@@ -16,7 +16,7 @@ export class StarRatingComponent {
     const fullStars = Math.floor(val);
     const hasHalfStar = val % 1 >= 0.5;
 
-    const stars: ('full' | 'half' | 'empty')[] = Array(fullStars).fill('full');
+    const stars: ('full' | 'half' | 'empty')[] = new Array(fullStars).fill('full');
 
     if (hasHalfStar) stars.push('half');
 
