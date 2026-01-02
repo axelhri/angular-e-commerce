@@ -1,7 +1,13 @@
 <section class="max-w-[80vw] mx-auto">
 
   @if (facade.loading()) {
-    <p>loading...</p>
+    <ul class="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-8 justify-center">
+      @for (skeleton of skeletons; track skeleton ) {
+        <li>
+          <app-products-list-skeleton />
+        </li>
+      }
+    </ul>
   }
 
   @if (facade.error()) {
