@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://java-e-commerce.duckdns.org/api/v1/',
+  apiUrl: 'https://neora.duckdns.org/api/v1/',
 };
