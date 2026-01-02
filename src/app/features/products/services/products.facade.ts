@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductSummary } from '../models/product-summary';
-import { finalize } from 'rxjs';
+import { finalize, map, timer, zip } from 'rxjs';
 import { ProductsService } from './products.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -22,6 +22,8 @@ export class ProductsFacade {
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
 
+  readonly minLoad$ = timer(500);
+
   constructor() {
     effect(() => {
       const params = this.queryParams();
@@ -37,18 +39,22 @@ export class ProductsFacade {
     this.loading.set(true);
     this.error.set(null);
 
-    this.productService
-      .getProducts({
-        search: this.search(),
-        page: this.page(),
-      })
-      .pipe(finalize(() => this.loading.set(false)))
+    const apiRequest$ = this.productService.getProducts({
+      search: this.search(),
+      page: this.page(),
+    });
+
+    zip(apiRequest$, this.minLoad$)
+      .pipe(
+        map(([res]) => res),
+        finalize(() => this.loading.set(false)),
+      )
       .subscribe({
         next: (res) => {
           this.products.set(res.data.content);
           this.totalPages.set(res.data.totalPages);
         },
-        error: () => this.error.set('Erreur de chargement'),
+        error: () => this.error.set('Oh no! Something went wrong!'),
       });
   }
 }
