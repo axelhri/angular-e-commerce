@@ -9,7 +9,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "angular-e-commerce": {
+    "neora": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -70,10 +70,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-e-commerce:build:production"
+              "buildTarget": "neora:build:production"
             },
             "development": {
-              "buildTarget": "angular-e-commerce:build:development"
+              "buildTarget": "neora:build:development"
             }
           },
           "defaultConfiguration": "development"
