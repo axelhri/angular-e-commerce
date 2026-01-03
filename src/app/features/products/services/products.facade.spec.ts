@@ -40,6 +40,7 @@ describe('ProductsFacade', () => {
   };
 
   beforeEach(() => {
+    vi.useFakeTimers();
     // Arrange
     productsServiceSpy = {
       getProducts: vi.fn(),
@@ -66,11 +67,13 @@ describe('ProductsFacade', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    vi.useRealTimers();
   });
 
   it('should initialize and load products with default parameters', () => {
     // Act
     TestBed.flushEffects();
+    vi.advanceTimersByTime(500);
 
     // Assert
     expect(productsServiceSpy.getProducts).toHaveBeenCalledWith({ search: '', page: 0 });
@@ -121,6 +124,7 @@ describe('ProductsFacade', () => {
     // Act
     responseSubject.next(mockResponse);
     responseSubject.complete();
+    vi.advanceTimersByTime(500);
 
     // Assert
     expect(facade.loading()).toBe(false);
@@ -136,7 +140,7 @@ describe('ProductsFacade', () => {
     TestBed.flushEffects();
 
     // Assert
-    expect(facade.error()).toBe('Erreur de chargement');
+    expect(facade.error()).toBe('Oh no! Something went wrong!');
     expect(facade.loading()).toBe(false);
   });
 });
