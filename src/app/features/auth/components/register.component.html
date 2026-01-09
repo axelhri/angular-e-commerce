@@ -1,0 +1,50 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <label for="email">email</label>
+    <input
+      id="email"
+      formControlName="email"
+      type="email"
+      [attr.aria-invalid]="f.email.invalid && f.email.dirty"
+      aria-describedby="email-error"
+    />
+
+  @if (f.email.dirty && f.email.errors) {
+    @if (f.email.hasError('required')) {
+      <small>Email required</small>
+    }
+    @if (f.email.hasError('email')) {
+      <small>Email invalid</small>
+    }
+  }
+
+  <label for="password">password</label>
+    <input
+      id="password"
+      formControlName="password"
+      type="password"
+      [attr.aria-invalid]="f.password.invalid && f.password.dirty"
+      aria-describedby="password-error"
+    />
+
+  @if (f.password.dirty && f.password.errors) {
+    @if (f.password.hasError('required')) {
+      <small>Password required</small>
+    }
+    @if (f.password.hasError('minlength')) {
+      <small>Password must be at least 8 characters long</small>
+    }
+    @if (f.password.hasError('pattern')) {
+      <small>Password must contain at least one uppercase, one lowercase, one number and one special character</small>
+    }
+  }
+
+  <button type="submit" [disabled]="registerForm.invalid || isLoading()">submit</button>
+</form>
+
+@if (successMessage()) {
+  <output>{{ successMessage() }}</output>
+}
+
+@if (errorMessage()) {
+  <output role="alert">{{ errorMessage() }}</output>
+}
