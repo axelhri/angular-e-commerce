@@ -1,6 +1,12 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
   <label for="email">email</label>
-    <input id="email" formControlName="email" type="email" />
+    <input
+      id="email"
+      formControlName="email"
+      type="email"
+      [attr.aria-invalid]="f.email.invalid && f.email.dirty"
+      aria-describedby="email-error"
+    />
 
   @if (f.email.dirty && f.email.errors) {
     @if (f.email.hasError('required')) {
@@ -12,7 +18,13 @@
   }
 
   <label for="password">password</label>
-    <input id="password" formControlName="password" type="password" />
+    <input
+      id="password"
+      formControlName="password"
+      type="password"
+      [attr.aria-invalid]="f.password.invalid && f.password.dirty"
+      aria-describedby="password-error"
+    />
 
   @if (f.password.dirty && f.password.errors) {
     @if (f.password.hasError('required')) {
@@ -26,13 +38,13 @@
     }
   }
 
-  <button type="submit" [disabled]="registerForm.invalid">submit</button>
+  <button type="submit" [disabled]="registerForm.invalid || isLoading()">submit</button>
 </form>
 
 @if (successMessage()) {
-  <p>{{ successMessage() }}</p>
+  <p role="status">{{ successMessage() }}</p>
 }
 
 @if (errorMessage()) {
-  <p>{{ errorMessage() }}</p>
+  <p role="alert">{{ errorMessage() }}</p>
 }
