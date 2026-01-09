@@ -42,9 +42,9 @@
 </form>
 
 @if (successMessage()) {
-  <p role="status">{{ successMessage() }}</p>
+  <output>{{ successMessage() }}</output>
 }
 
 @if (errorMessage()) {
-  <p role="alert">{{ errorMessage() }}</p>
+  <output role="alert">{{ errorMessage() }}</output>
 }
