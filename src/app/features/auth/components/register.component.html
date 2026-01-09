@@ -29,6 +29,10 @@
   <button type="submit" [disabled]="registerForm.invalid">submit</button>
 </form>
 
-@if (message()) {
-  <p>{{ message() }}</p>
+@if (successMessage()) {
+  <p>{{ successMessage() }}</p>
+}
+
+@if (errorMessage()) {
+  <p>{{ errorMessage() }}</p>
 }
