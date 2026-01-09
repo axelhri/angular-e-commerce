@@ -2,9 +2,33 @@
   <label for="email">email</label>
     <input id="email" formControlName="email" type="email" />
 
+  @if (f.email.dirty && f.email.errors) {
+    @if (f.email.hasError('required')) {
+      <small>Email required</small>
+    }
+    @if (f.email.hasError('email')) {
+      <small>Email invalid</small>
+    }
+  }
+
   <label for="password">password</label>
     <input id="password" formControlName="password" type="password" />
 
-  <button type="submit" [disabled]="registerForm.invalid">submit</button>
+  @if (f.password.dirty && f.password.errors) {
+    @if (f.password.hasError('required')) {
+      <small>Password required</small>
+    }
+    @if (f.password.hasError('minlength')) {
+      <small>Password must be at least 8 characters long</small>
+    }
+    @if (f.password.hasError('pattern')) {
+      <small>Password must contain at least one uppercase, one lowercase, one number and one special character</small>
+    }
+  }
 
+  <button type="submit" [disabled]="registerForm.invalid">submit</button>
 </form>
+
+@if (message()) {
+  <p>{{ message() }}</p>
+}
