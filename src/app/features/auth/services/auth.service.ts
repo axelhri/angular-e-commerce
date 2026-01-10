@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AuthenticationRequest } from '../models/authentication-request';
-import { BehaviorSubject, Observable, pipe, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { RegisterResponse } from '../models/register-response';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { RegisterResponse } from '../models/register-response';
 export class AuthService {
   private readonly apiUrl = `${environment.apiUrl}auth/`;
   private readonly http = inject(HttpClient);
-  private loggedIn$ = new BehaviorSubject<boolean>(false);
+  loggedIn$ = new BehaviorSubject<boolean>(false);
 
   register(request: AuthenticationRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.apiUrl}register`, request);
@@ -25,7 +25,7 @@ export class AuthService {
 
   logout(): Observable<void> {
     return this.http
-      .post(`${this.apiUrl}logout`, {}, { withCredentials: true })
+      .post<void>(`${this.apiUrl}logout`, {}, { withCredentials: true })
       .pipe(tap(() => this.loggedIn$.next(false)));
   }
 
