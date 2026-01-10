@@ -1,0 +1,40 @@
+<form [formGroup]="auth().form" (ngSubmit)="auth().submit()">
+  <label for="email">Email</label>
+  <input
+    id="email"
+    formControlName="email"
+    type="email"
+    [attr.aria-invalid]="f.email.invalid && f.email.dirty"
+  />
+
+  @if (f.email.dirty && f.email.errors) {
+    @if (f.email.hasError('required')) { <small>Email required</small> }
+    @if (f.email.hasError('email')) { <small>Email invalid</small> }
+  }
+
+  <label for="password">Password</label>
+  <input
+    id="password"
+    formControlName="password"
+    type="password"
+    [attr.aria-invalid]="f.password.invalid && f.password.dirty"
+  />
+
+  @if (f.password.dirty && f.password.errors) {
+    @if (f.password.hasError('required')) { <small>Password required</small> }
+    @if (f.password.hasError('minlength')) { <small>Password must be at least 8 characters long</small> }
+    @if (f.password.hasError('pattern')) { <small>Password must contain at least one uppercase, one lowercase, one number and one special character</small> }
+  }
+
+  <button type="submit" [disabled]="auth().form.invalid || auth().isLoading()">
+    {{ submitLabel() }}
+  </button>
+</form>
+
+@if (auth().successMessage()) {
+  <output>{{ auth().successMessage() }}</output>
+}
+
+@if (auth().errorMessage()) {
+  <output role="alert">{{ auth().errorMessage() }}</output>
+}
