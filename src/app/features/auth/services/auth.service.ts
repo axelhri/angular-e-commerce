@@ -29,6 +29,10 @@ export class AuthService {
       .pipe(tap(() => this.loggedIn$.next(false)));
   }
 
+  refreshToken(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}refresh-token`, {}, { withCredentials: true });
+  }
+
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn$.asObservable();
   }
