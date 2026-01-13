@@ -9,6 +9,8 @@ module.exports = {
         amber: 'var(--color-amber)',
         grey: 'var(--color-grey)',
         cream: 'var(--color-cream)',
+        red: 'var(--color-red)',
+        green: 'var(--color-green)',
       },
       fontFamily: {
         inter: ['var(--font-inter)'],
