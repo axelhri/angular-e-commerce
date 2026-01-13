@@ -20,9 +20,12 @@
 
       <ul class="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-8 justify-center">
         @for (product of facade.products(); track product.product_id) {
-          <li class="w-[14rem]">
+          <li class="w-[14rem] relative">
             <a [routerLink]="['/products', product.product_slug]">
               <img [src]="product.product_image" [alt]="product.product_name" class="w-full h-[180px] object-cover block rounded-lg">
+              @if (product.product_stock < 10) {
+                <span class="bg-red text-white absolute right-1 top-1 py-1 px-2 text-sm rounded-md">{{product.product_stock}} left</span>
+              }
             </a>
               <div class="p-2">
                 <app-star-rating [rating]="product.product_rating" />
