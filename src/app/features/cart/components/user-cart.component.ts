@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CartProductsService } from '../services/cart-products.service';
 import { CartProducts } from '../models/cart-products';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
-import { CartTotal } from '../models/cart-total';
 
 @Component({
   selector: 'app-user-cart',
