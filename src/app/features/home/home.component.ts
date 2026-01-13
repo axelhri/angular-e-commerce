@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   standalone: true,
   imports: [],
-  templateUrl: './home.html',
+  templateUrl: './home.component.html',
 })
 export class HomeComponent {}

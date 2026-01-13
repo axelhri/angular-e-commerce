@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/home/home';
+import { HomeComponent } from './features/home/home.component';
 import { ProductsListComponent } from './features/products/components/products-list.component';
 import { SingleProductComponent } from './features/products/components/single-product.component';
 import { RegisterComponent } from './features/auth/components/register.component';
