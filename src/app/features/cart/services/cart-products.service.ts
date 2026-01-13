@@ -4,6 +4,7 @@ import { CartProducts } from '../models/cart-products';
 import { ApiResponse } from '../../../shared/models/api-response';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
+import { CartTotal } from '../models/cart-total';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +15,9 @@ export class CartProductsService {
 
   getCartProducts(): Observable<ApiResponse<CartProducts[]>> {
     return this.http.get<ApiResponse<CartProducts[]>>(this.apiUrl);
+  }
+
+  getCartTotalAmount(): Observable<CartTotal> {
+    return this.http.get<CartTotal>(`${this.apiUrl}/total`);
   }
 }
