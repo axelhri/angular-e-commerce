@@ -14,17 +14,15 @@ export class AuthInterceptor implements HttpInterceptor {
   private readonly authService = inject(AuthService);
 
   private isRefreshing = false;
-  private refreshSubject: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(
-    null,
-  );
+  private readonly refreshSubject = new BehaviorSubject<boolean | null>(false);
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const authReq = req.clone({ withCredentials: true });
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 403 || error.status === 401) {
-          return this.handle401And403Error(authReq, next);
+        if (error.status === 401) {
+          return this.handle401Error(authReq, next);
         } else {
           return throwError(() => error);
         }
@@ -32,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
-  private handle401And403Error(
+  private handle401Error(
     req: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
