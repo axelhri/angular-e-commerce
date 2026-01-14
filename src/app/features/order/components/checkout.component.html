@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="onCheckout()" class="flex flex-col">
+  <label for="first-name">First name</label>
+  <input id="first-name" formControlName="first_name" class="outline-1"/>
+
+  <label for="last-name">Last name</label>
+  <input id="last-name" formControlName="last_name" class="outline-1"/>
+
+  <label for="address">Address</label>
+  <input id="address" formControlName="address_line" class="outline-1"/>
+
+  <label for="city">City</label>
+  <input id="city" formControlName="city" class="outline-1"/>
+
+  <label for="country">Country</label>
+  <input id="country" formControlName="country" class="outline-1"/>
+
+  <label for="state">State</label>
+  <input id="state" formControlName="state" class="outline-1"/>
+
+  <label for="postal-code">Postal code</label>
+  <input id="postal-code" formControlName="postal_code" class="outline-1"/>
+
+  <button type="submit">submit</button>
+</form>
