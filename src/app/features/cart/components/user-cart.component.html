@@ -20,6 +20,8 @@
 
 <p>{{totalAmount() | dynamicCurrency:{fromCents: true} }}</p>
 
+<button (click)="initiateCheckout()">checkout</button>
+
 @if (errorMessage()) {
   <p>{{errorMessage()}}</p>
 }

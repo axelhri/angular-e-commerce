@@ -3,6 +3,7 @@ import { CartProductsService } from '../services/cart-products.service';
 import { CartProducts } from '../models/cart-products';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-cart',
@@ -12,6 +13,7 @@ import { finalize } from 'rxjs';
 })
 export class UserCartComponent implements OnInit {
   private readonly cartProductsService = inject(CartProductsService);
+  private readonly router = inject(Router);
   readonly products = signal<CartProducts[]>([]);
   readonly isLoading = signal<boolean>(false);
 
@@ -80,6 +82,14 @@ export class UserCartComponent implements OnInit {
           return item;
         })
         .filter((item) => item.product_quantity > 0);
+    });
+  }
+
+  initiateCheckout(): void {
+    const itemsIds = this.products().map((item) => item.cart_item_id);
+
+    this.router.navigate(['/checkout'], {
+      state: { ids: itemsIds },
     });
   }
 }
