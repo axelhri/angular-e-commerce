@@ -4,7 +4,11 @@
       <li>
         <h3>{{ product.product_name }}</h3>
         <p>{{ product.product_price | dynamicCurrency:{fromCents: true} }}</p>
-        <p>{{product.product_quantity}}</p>
+          <button (click)="updateQuantity(
+            product.product_id,
+            1
+          )">add</button>
+          <p>{{product.product_quantity}}</p>
       </li>
   }
 </ul>
