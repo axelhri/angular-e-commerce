@@ -4,9 +4,11 @@
       <li>
         <h3>{{ product.product_name }}</h3>
         <p>{{ product.product_price | dynamicCurrency:{fromCents: true} }}</p>
-          <button (click)="updateQuantity(
-            product.product_id,
-            1
+          <button (click)="removeProductFromCart(
+            product.product_id
+          )">remove</button>
+          <button (click)="addProductToCart(
+            product.product_id
           )">add</button>
           <p>{{product.product_quantity}}</p>
       </li>
@@ -16,7 +18,7 @@
   <p>Your cart is empty for the moment</p>
 }
 
-<p>{{totalAmount()}}</p>
+<p>{{totalAmount() | dynamicCurrency:{fromCents: true} }}</p>
 
 @if (errorMessage()) {
   <p>{{errorMessage()}}</p>

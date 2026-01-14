@@ -26,4 +26,8 @@ export class CartProductsService {
   addProductToCart(request: ManageCart): Observable<ApiResponse<CartResponse>> {
     return this.http.post<ApiResponse<CartResponse>>(`${this.apiUrl}-items`, request);
   }
+
+  removeProductQuantityFromCart(request: ManageCart): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}-items`, { body: request });
+  }
 }
