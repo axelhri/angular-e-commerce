@@ -1,6 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutService } from '../services/checkout.service';
+import { StripeService } from '../services/stripe.service';
+import { StripeElements, StripePaymentElement } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-checkout',
@@ -10,6 +12,7 @@ import { CheckoutService } from '../services/checkout.service';
 })
 export class CheckoutComponent {
   private readonly checkoutService = inject(CheckoutService);
+  private readonly stripeService = inject(StripeService);
   readonly ids = signal<string[]>(history.state.ids ?? []);
 
   readonly form = new FormGroup({
@@ -22,6 +25,10 @@ export class CheckoutComponent {
     postal_code: new FormControl('', { nonNullable: true }),
   });
 
+  private clientSecret!: string;
+  private elements!: StripeElements;
+  private paymentElement!: StripePaymentElement;
+
   onCheckout(): void {
     console.log('ids', this.ids());
     console.log('form', this.form.getRawValue());
@@ -31,12 +38,23 @@ export class CheckoutComponent {
     };
 
     this.checkoutService.checkout(request).subscribe({
-      next: (response) => {
+      next: async (response) => {
+        this.clientSecret = response.data.client_secret;
+        const stripe = await this.stripeService.getStripe();
+        this.elements = stripe.elements({ clientSecret: this.clientSecret });
+
+        this.paymentElement = this.elements.create('payment');
+        this.paymentElement.mount('#payment-element');
+
         console.log('success', response);
       },
       error: (err) => {
         console.error('error', err);
       },
     });
+  }
+
+  async pay(): Promise<void> {
+    await this.stripeService.confirmPayment(this.elements);
   }
 }
