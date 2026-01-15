@@ -34,7 +34,7 @@
                 </a>
                 <div class="flex justify-between items-center mt-4">
                   <p class="text-lg font-semibold">{{ product.product_price | dynamicCurrency:{ fromCents: true } }}</p>
-                  <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5">Add to Cart</button>
+                  <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="addProductToCart(product.product_id)">Add to Cart</button>
                 </div>
               </div>
           </li>
