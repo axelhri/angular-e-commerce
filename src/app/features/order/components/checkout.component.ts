@@ -38,15 +38,15 @@ export class CheckoutComponent {
     };
 
     this.checkoutService.checkout(request).subscribe({
-      next: async (response) => {
+      next: (response) => {
         this.clientSecret = response.data.client_secret;
-        const stripe = await this.stripeService.getStripe();
-        this.elements = stripe.elements({ clientSecret: this.clientSecret });
 
-        this.paymentElement = this.elements.create('payment');
-        this.paymentElement.mount('#payment-element');
-
-        console.log('success', response);
+        this.stripeService.getStripe().then((stripe) => {
+          this.elements = stripe.elements({ clientSecret: this.clientSecret });
+          this.paymentElement = this.elements.create('payment');
+          this.paymentElement.mount('#payment-element');
+          console.log('success', response);
+        });
       },
       error: (err) => {
         console.error('error', err);
