@@ -6,7 +6,7 @@ import { loadStripe, PaymentIntentResult, Stripe, StripeElements } from '@stripe
   providedIn: 'root',
 })
 export class StripeService {
-  private stripePromise = loadStripe(environment.stripeKey);
+  private readonly stripePromise = loadStripe(environment.stripeKey);
 
   async getStripe(): Promise<Stripe> {
     const stripe = await this.stripePromise;
