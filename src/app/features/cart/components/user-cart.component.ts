@@ -1,20 +1,24 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CartProductsService } from '../services/cart-products.service';
-import { CartProducts } from '../models/cart-products';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 import { finalize } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CartResponse } from '../models/cart-response';
+import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { bootstrapTrash3Fill } from '@ng-icons/bootstrap-icons';
 
 @Component({
   selector: 'app-user-cart',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, TruncatePipe, NgIcon, RouterLink],
+  providers: [provideIcons({ bootstrapTrash3Fill })],
   templateUrl: './user-cart.component.html',
 })
 export class UserCartComponent implements OnInit {
   private readonly cartProductsService = inject(CartProductsService);
   private readonly router = inject(Router);
-  readonly products = signal<CartProducts[]>([]);
+  readonly products = signal<CartResponse[]>([]);
   readonly isLoading = signal<boolean>(false);
 
   readonly errorMessage = signal<string | null>(null);
@@ -66,7 +70,7 @@ export class UserCartComponent implements OnInit {
       });
   }
 
-  private updateProductState(productId: string, updatedItem: CartProducts | null): void {
+  private updateProductState(productId: string, updatedItem: CartResponse | null): void {
     this.products.update((items) => {
       if (updatedItem) {
         const index = items.findIndex((i) => i.product_id === productId);
