@@ -24,6 +24,7 @@
       <p>{{facade.product()!.vendor.vendor_rating}}</p>
       <img [src]="facade.product()!.vendor.vendor_image" alt="product image">
 
+      <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="addProductToCart(facade.product()!.product_id)">Add to Cart</button>
     } @else {
       <p>No product found</p>
     }
