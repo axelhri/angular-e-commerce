@@ -2,13 +2,17 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CartProductsService } from '../services/cart-products.service';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 import { finalize } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartResponse } from '../models/cart-response';
+import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { bootstrapTrash3Fill } from '@ng-icons/bootstrap-icons';
 
 @Component({
   selector: 'app-user-cart',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, TruncatePipe, NgIcon, RouterLink],
+  providers: [provideIcons({ bootstrapTrash3Fill })],
   templateUrl: './user-cart.component.html',
 })
 export class UserCartComponent implements OnInit {

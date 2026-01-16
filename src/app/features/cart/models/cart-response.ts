@@ -5,4 +5,5 @@ export interface CartResponse {
   product_image: string;
   product_quantity: number;
   product_price: number;
+  product_slug: string;
 }
