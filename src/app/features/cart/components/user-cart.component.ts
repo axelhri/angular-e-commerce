@@ -1,9 +1,9 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CartProductsService } from '../services/cart-products.service';
-import { CartProducts } from '../models/cart-products';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
+import { CartResponse } from '../models/cart-response';
 
 @Component({
   selector: 'app-user-cart',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class UserCartComponent implements OnInit {
   private readonly cartProductsService = inject(CartProductsService);
   private readonly router = inject(Router);
-  readonly products = signal<CartProducts[]>([]);
+  readonly products = signal<CartResponse[]>([]);
   readonly isLoading = signal<boolean>(false);
 
   readonly errorMessage = signal<string | null>(null);
@@ -66,7 +66,7 @@ export class UserCartComponent implements OnInit {
       });
   }
 
-  private updateProductState(productId: string, updatedItem: CartProducts | null): void {
+  private updateProductState(productId: string, updatedItem: CartResponse | null): void {
     this.products.update((items) => {
       if (updatedItem) {
         const index = items.findIndex((i) => i.product_id === productId);

@@ -1,16 +1,19 @@
 @if (products().length > 0) {
 <ul>
   @for (product of products(); track product.product_id) {
-      <li>
-        <h3>{{ product.product_name }}</h3>
-        <p>{{ product.product_price | dynamicCurrency:{fromCents: true} }}</p>
-          <button (click)="removeProductFromCart(
-            product.product_id
-          )">remove</button>
-          <button (click)="addProductToCart(
-            product.product_id
-          )">add</button>
-          <p>{{product.product_quantity}}</p>
+      <li class="outline-1 w-[25rem]">
+        <img [src]="product.product_image" [alt]="product.product_name">
+        <div>
+          <h3>{{ product.product_name }}</h3>
+          <p>{{ product.product_price | dynamicCurrency:{fromCents: true} }}</p>
+            <button (click)="removeProductFromCart(
+              product.product_id
+            )">remove</button>
+            <button (click)="addProductToCart(
+              product.product_id
+            )">add</button>
+            <p>{{product.product_quantity}}</p>
+        </div>
       </li>
   }
 </ul>
