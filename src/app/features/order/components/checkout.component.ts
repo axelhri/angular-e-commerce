@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutService } from '../services/checkout.service';
 import { StripeService } from '../services/stripe.service';
 import { StripeElements, StripePaymentElement } from '@stripe/stripe-js';
+import { FetchOrder } from '../models/fetch-order';
 
 @Component({
   selector: 'app-checkout',
@@ -14,6 +15,10 @@ export class CheckoutComponent {
   private readonly checkoutService = inject(CheckoutService);
   private readonly stripeService = inject(StripeService);
   readonly ids = signal<string[]>(history.state.ids ?? []);
+
+  private orderId!: string;
+
+  readonly order = signal<FetchOrder | null>(null);
 
   readonly form = new FormGroup({
     first_name: new FormControl('', { nonNullable: true }),
@@ -40,6 +45,17 @@ export class CheckoutComponent {
     this.checkoutService.checkout(request).subscribe({
       next: (response) => {
         this.clientSecret = response.data.client_secret;
+        this.orderId = response.data.order.order_id;
+
+        this.checkoutService.getOrderById(this.orderId).subscribe({
+          next: (order) => {
+            console.log(order.data);
+            this.order.set(order.data);
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
 
         this.stripeService.getStripe().then((stripe) => {
           this.elements = stripe.elements({ clientSecret: this.clientSecret });

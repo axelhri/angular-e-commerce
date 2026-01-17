@@ -1,4 +1,4 @@
-<div class="flex justify-between">
+<div>
   <form [formGroup]="form" (ngSubmit)="onCheckout()" class="flex flex-col gap-3 max-w-[35rem]">
 
     <div class="flex items-center gap-6">
@@ -42,7 +42,29 @@
     <button type="submit" class="mt-2 bg-indigo text-md text-white rounded-md px-3 py-1.5 w-fit font-normal">Confirm</button>
   </form>
 
+
   <div id="payment-element"></div>
 
   <button (click)="pay()">Payer</button>
+
+  @if (order(); as order) {
+    <div class="bg-[#A39E93]/10 w-90 h-full p-4 rounded-md">
+      <h3 class="text-lg font-jakarta font-medium">Order summary</h3>
+
+
+      <ul class="flex flex-col gap-6 mt-4">
+
+        <li class="border-b-1 border-grey">
+
+        </li>
+
+        <li class="flex justify-between border-b-1 border-grey">
+          <span>Order total</span>
+          <span>{{ order.order_price + 5.99 }}</span>
+        </li>
+
+      </ul>
+
+    </div>
+  }
 </div>
