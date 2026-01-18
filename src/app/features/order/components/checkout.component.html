@@ -1,28 +1,85 @@
-<form [formGroup]="form" (ngSubmit)="onCheckout()" class="flex flex-col">
-  <label for="first-name">First name</label>
-  <input id="first-name" formControlName="first_name" class="outline-1"/>
+<div>
+  @if (order(); as order) {
+  <div id="payment-element"></div>
 
-  <label for="last-name">Last name</label>
-  <input id="last-name" formControlName="last_name" class="outline-1"/>
+    <div class="bg-[#A39E93]/10 w-90 h-full p-4 rounded-md">
+      <h3 class="text-lg font-jakarta font-medium">Order summary</h3>
 
-  <label for="address">Address</label>
-  <input id="address" formControlName="address_line" class="outline-1"/>
 
-  <label for="city">City</label>
-  <input id="city" formControlName="city" class="outline-1"/>
+      <ul class="flex flex-col gap-6 mt-4">
 
-  <label for="country">Country</label>
-  <input id="country" formControlName="country" class="outline-1"/>
+        <li class="flex flex-col gap-2">
+          @for (product of products(); track product.product_id) {
+            <div class="flex items-center gap-2">
+              <img [src]="product.product_image" [alt]="product.product_name" class="w-[80px] h-[100px] object-cover block rounded-md">
+              <p class="text-sm">{{product.product_name | truncate:50}}</p>
+              <span>{{product.quantity}}</span>
+            </div>
+          }
 
-  <label for="state">State</label>
-  <input id="state" formControlName="state" class="outline-1"/>
+        </li>
 
-  <label for="postal-code">Postal code</label>
-  <input id="postal-code" formControlName="postal_code" class="outline-1"/>
+        <li class="flex justify-between border-b-1 border-grey">
+          <span>Subtotal</span>
+          <span>{{ order.order_price }}</span>
+        </li>
 
-  <button type="submit">submit</button>
-</form>
+        <li class="flex justify-between border-b-1 border-grey">
+          <span>Shipping</span>
+          <span>5,99 €</span>
+        </li>
 
-<div id="payment-element"></div>
+        <li class="flex justify-between border-b-1 border-grey">
+          <span>Order total</span>
+          <span>{{ order.order_price + 5.99 }}</span>
+        </li>
 
-<button (click)="pay()">Payer</button>
+        <button (click)="pay()" class="bg-indigo text-md text-white rounded-md px-3 py-1.5 w-fit font-normal">Pay {{ order.order_price + 5.99 | dynamicCurrency }}</button>
+      </ul>
+
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onCheckout()" class="flex flex-col gap-3 max-w-[35rem]">
+
+      <div class="flex items-center gap-6">
+        <div class="flex flex-col gap-1">
+          <label for="first-name" class="font-light">First name</label>
+          <input id="first-name" formControlName="first_name" class="border-1 rounded-sm border-grey py-0.5 px-2 focus:outline-indigo focus:outline-2 focus:border-none"/>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="last-name" class="font-light">Last name</label>
+          <input id="last-name" formControlName="last_name" class="border-1 rounded-sm border-grey py-0.5 px-2 focus:outline-indigo focus:outline-2 focus:border-none"/>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="address" class="font-light">Address</label>
+        <input id="address" formControlName="address_line" class="border-1 rounded-sm border-grey py-0.5 px-2 focus:outline-indigo focus:outline-2 focus:border-none"/>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <div class="flex flex-col gap-1">
+          <label for="city" class="font-light">City</label>
+          <input id="city" formControlName="city" class="border-1 rounded-sm border-grey py-0.5 px-2 focus:outline-indigo focus:outline-2 focus:border-none"/>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="country" class="font-light">Country</label>
+          <input id="country" formControlName="country" class="border-1 rounded-sm border-grey py-0.5 px-2 focus:outline-indigo focus:outline-2 focus:border-none"/>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <div class="flex flex-col gap-1">
+          <label for="state" class="font-light">State</label>
+          <input id="state" formControlName="state" class="border-1 rounded-sm border-grey py-0.5 px-2 focus:outline-indigo focus:outline-2 focus:border-none"/>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="postal-code" class="font-light">Postal code</label>
+          <input id="postal-code" formControlName="postal_code" class="border-1 rounded-sm border-grey py-0.5 px-2 focus:outline-indigo focus:outline-2 focus:border-none"/>
+        </div>
+      </div>
+
+      <button type="submit" class="mt-2 bg-indigo text-md text-white rounded-md px-3 py-1.5 w-fit font-normal">Confirm</button>
+    </form>
+  }
+</div>
