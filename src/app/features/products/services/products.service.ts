@@ -7,7 +7,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { ProductsQuery } from '../models/products-query';
 import { ProductResponse } from '../models/product-response';
-import { FetchOrder } from '../../order/models/fetch-order';
 
 @Injectable({
   providedIn: 'root',
