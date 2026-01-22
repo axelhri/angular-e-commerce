@@ -1,10 +1,8 @@
 <div>
+  <div id="payment-element" class="w-[40rem]"></div>
   @if (order(); as order) {
-  <div id="payment-element"></div>
-
     <div class="bg-[#A39E93]/10 w-90 h-full p-4 rounded-md">
       <h3 class="text-lg font-jakarta font-medium">Order summary</h3>
-
 
       <ul class="flex flex-col gap-6 mt-4">
 
@@ -39,7 +37,7 @@
 
     </div>
   } @else {
-    <form [formGroup]="form" (ngSubmit)="onCheckout()" class="flex flex-col gap-3 max-w-[35rem]">
+    <form [formGroup]="form" (ngSubmit)="onCheckout()" class="flex flex-col gap-3 max-w-[35rem] mx-auto">
 
       <div class="flex items-center gap-6">
         <div class="flex flex-col gap-1">
