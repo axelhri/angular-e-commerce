@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { SingleProductFacade } from '../services/single-product.facade';
 import { CartProductsService } from '../../cart/services/cart-products.service';
+import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 
 @Component({
   selector: 'app-single-product',
   standalone: true,
   providers: [SingleProductFacade],
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './single-product.component.html',
 })
 export class SingleProductComponent {

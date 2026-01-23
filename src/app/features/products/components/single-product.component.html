@@ -10,21 +10,41 @@
 
   @if (!facade.loading() && !facade.error()) {
 
-    @if (facade.product()) {
-      <p>{{facade.product()!.product_name}}</p>
-      <p>{{facade.product()!.product_price}}</p>
-      <p>{{facade.product()!.product_description}}</p>
-      <p>{{facade.product()!.product_stock}}</p>
+    @if (facade.product(); as product) {
 
-      @for (image of facade.product()!.product_images; track $index) {
-        <img [src]="image.product_images" alt="product image">
-      }
+      <div class="flex items-center gap-3 mb-2">
+        <img [src]="facade.product()!.vendor.vendor_image" alt="product image" class="w-[30px] h-[30px] object-cover block rounded-full">
+        <p>{{facade.product()!.vendor.vendor_name}}</p>
+        <p>{{facade.product()!.vendor.vendor_rating}}</p>
+      </div>
 
-      <p>{{facade.product()!.vendor.vendor_name}}</p>
-      <p>{{facade.product()!.vendor.vendor_rating}}</p>
-      <img [src]="facade.product()!.vendor.vendor_image" alt="product image">
+    <div class="flex gap-4">
+      <div class="flex flex-col gap-3 w-[35rem]">
+        <div>
+          <img [src]="product.product_images[0].product_images" alt="product image" class="w-full h-[400px] object-cover block rounded-lg">
+        </div>
+        <div class="flex items-center justify-between">
+          @for (image of facade.product()?.product_images; track $index) {
+            @if (!$first) {
+              <img [src]="image.product_images" alt="product image" class="w-[100px] h-[100px] object-cover block rounded-lg">
+            }
+          }
+        </div>
+      </div>
 
-      <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="addProductToCart(facade.product()!.product_id)">Add to Cart</button>
+      <div class="max-w-[30rem] flex flex-col gap-3">
+        <h3 class="font-jakarta font-semibold text-xl">{{product.product_name}}</h3>
+        <span class="text-xl font-light">{{product.product_price | dynamicCurrency: {fromCents: true} }}</span>
+        <p>{{product.product_description}}</p>
+
+        <div>
+          <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="addProductToCart(facade.product()!.product_id)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+<!--      <p>{{product.product_stock}}</p>-->
+
     } @else {
       <p>No product found</p>
     }
