@@ -14,6 +14,12 @@ export class SingleProductComponent {
   readonly facade = inject(SingleProductFacade);
   private readonly cartService = inject(CartProductsService);
 
+  activeImage: string | null = null;
+
+  setActiveImage(image: string): void {
+    this.activeImage = image;
+  }
+
   addProductToCart(productId: string): void {
     this.cartService.addProductToCart({ product_id: productId, product_quantity: 1 }).subscribe({
       next: (res) => {
