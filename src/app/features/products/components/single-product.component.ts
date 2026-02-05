@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { SingleProductFacade } from '../services/single-product.facade';
 import { CartProductsService } from '../../cart/services/cart-products.service';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
-import { finalize } from 'rxjs';
 import { BookmarksService } from '../../bookmarks/services/bookmarks.service';
 
 @Component({
