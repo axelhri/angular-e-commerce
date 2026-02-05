@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { SingleProductFacade } from '../services/single-product.facade';
 import { CartProductsService } from '../../cart/services/cart-products.service';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
+import { finalize } from 'rxjs';
+import { BookmarksService } from '../../bookmarks/services/bookmarks.service';
 
 @Component({
   selector: 'app-single-product',
@@ -13,6 +15,7 @@ import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 export class SingleProductComponent {
   readonly facade = inject(SingleProductFacade);
   private readonly cartService = inject(CartProductsService);
+  private readonly bookmarkService = inject(BookmarksService);
 
   activeImage: string | null = null;
 
@@ -29,5 +32,20 @@ export class SingleProductComponent {
         console.error('Failed to add product', err);
       },
     });
+  }
+
+  addProductToBookmarks(productId: string): void {
+    this.bookmarkService
+      .bookmarkProduct({
+        product_id: productId,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('Product added to bookmark', res);
+        },
+        error: (err) => {
+          console.error('Failed to add product', err);
+        },
+      });
   }
 }
