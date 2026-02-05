@@ -16,4 +16,8 @@ export class BookmarksService {
   bookmarkProduct(request: ManageBookmark): Observable<ApiResponse<BookmarkResponse>> {
     return this.http.post<ApiResponse<BookmarkResponse>>(this.apiUrl, request);
   }
+
+  removeProductFromBookmark(request: ManageBookmark): Observable<void> {
+    return this.http.delete<void>(this.apiUrl, { body: request });
+  }
 }

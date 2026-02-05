@@ -48,4 +48,19 @@ export class SingleProductComponent {
         },
       });
   }
+
+  removeProductToBookmarks(productId: string): void {
+    this.bookmarkService
+      .removeProductFromBookmark({
+        product_id: productId,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('Product added to bookmark', res);
+        },
+        error: (err) => {
+          console.error('Failed to add product', err);
+        },
+      });
+  }
 }
