@@ -20,4 +20,8 @@ export class BookmarksService {
   removeProductFromBookmark(request: ManageBookmark): Observable<void> {
     return this.http.delete<void>(this.apiUrl, { body: request });
   }
+
+  getUserBookmarks(): Observable<ApiResponse<BookmarkResponse[]>> {
+    return this.http.get<ApiResponse<BookmarkResponse[]>>(this.apiUrl);
+  }
 }
