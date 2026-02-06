@@ -6,6 +6,7 @@ import { RegisterComponent } from './features/auth/components/register.component
 import { LoginComponent } from './features/auth/components/login.component';
 import { UserCartComponent } from './features/cart/components/user-cart.component';
 import { CheckoutComponent } from './features/order/components/checkout.component';
+import { BookmarksComponent } from './features/bookmarks/component/bookmarks.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'cart', component: UserCartComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'bookmarks', component: BookmarksComponent },
   { path: '**', redirectTo: '' },
 ];
