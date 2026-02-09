@@ -30,4 +30,19 @@ export class BookmarksComponent implements OnInit {
         },
       });
   }
+
+  removeProductFromBookmarks(productId: string): void {
+    this.bookmarkService
+      .removeProductFromBookmark({
+        product_id: productId,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('Product removed from bookmark', res);
+        },
+        error: (err) => {
+          console.error('Failed to remove product', err);
+        },
+      });
+  }
 }

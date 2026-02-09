@@ -2,6 +2,9 @@
   @for (bookmark of bookmarks(); track bookmark.bookmark_id) {
     <li class="w-[14rem] relative">
       <p>{{ bookmark.bookmark_id }}</p>
+      <div>
+        <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="removeProductFromBookmarks(bookmark.product_id)">Remove from bookmarks</button>
+      </div>
     </li>
   }
 </ul>
