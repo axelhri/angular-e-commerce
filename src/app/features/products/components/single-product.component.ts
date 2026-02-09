@@ -48,7 +48,7 @@ export class SingleProductComponent {
       });
   }
 
-  removeProductToBookmarks(productId: string): void {
+  removeProductFromBookmarks(productId: string): void {
     this.bookmarkService
       .removeProductFromBookmark({
         product_id: productId,
