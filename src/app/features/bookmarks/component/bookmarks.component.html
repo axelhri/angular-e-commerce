@@ -1,10 +1,15 @@
-<ul class="grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-8 justify-center">
-  @for (bookmark of bookmarks(); track bookmark.bookmark_id) {
-    <li class="w-[14rem] relative">
-      <p>{{ bookmark.bookmark_id }}</p>
-      <div>
-        <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="removeProductFromBookmarks(bookmark.product_id)">Remove from bookmarks</button>
-      </div>
-    </li>
+<ul>
+    @for (item of bookmarksWithProducts(); track item.bookmark_id) {
+      <li>
+        <h3>{{ item.product.product_name | truncate: 60 }}</h3>
+        <img [src]="item.product.product_images[0].product_images" [alt]="item.product.product_name">
+        <p>{{ item.product.product_price | dynamicCurrency:{fromCents: true} }}</p>
+        <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="removeProductFromBookmarks(item.product_id)">
+          Remove
+        </button>
+      </li>
+    }
+  </ul>
+  @if (bookmarksWithProducts().length === 0 && !isLoading()) {
+    <p>You have no bookmarked products yet.</p>
   }
-</ul>
