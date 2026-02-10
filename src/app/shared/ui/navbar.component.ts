@@ -1,11 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import {
+  bootstrapPerson,
+  bootstrapSuitHeart,
+  bootstrapCart3,
+  bootstrapSearch,
+} from '@ng-icons/bootstrap-icons';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIcon],
+  providers: [
+    provideIcons({ bootstrapPerson, bootstrapSuitHeart, bootstrapCart3, bootstrapSearch }),
+  ],
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
