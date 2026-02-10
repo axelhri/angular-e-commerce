@@ -33,4 +33,8 @@ export class ProductsService {
       .get<ApiResponse<ProductResponse>>(`${this.apiUrl}/slug/${slug}`)
       .pipe(map((response) => response.data));
   }
+
+  getProductById(id: string): Observable<ApiResponse<ProductResponse>> {
+    return this.http.get<ApiResponse<ProductResponse>>(`${this.apiUrl}/${id}`);
+  }
 }
