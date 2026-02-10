@@ -2,11 +2,14 @@
     @for (item of bookmarksWithProducts(); track item.bookmark_id) {
       <li>
         <h3>{{ item.product.product_name | truncate: 60 }}</h3>
-        <img [src]="item.product.product_images[0].product_images" [alt]="item.product.product_name">
+        <img [src]="item.product.product_images[0].product_images" [alt]="item.product.product_name" class="w-[160px] h-[full] object-cover block rounded-md">
         <p>{{ item.product.product_price | dynamicCurrency:{fromCents: true} }}</p>
         <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="removeProductFromBookmarks(item.product_id)">
-          Remove
+          Remove from bookmark
         </button>
+        <div>
+          <button class="bg-indigo text-sm text-white rounded-md px-3 py-1.5" (click)="addProductToCart(item.product.product_id)">Add to Cart</button>
+        </div>
       </li>
     }
   </ul>

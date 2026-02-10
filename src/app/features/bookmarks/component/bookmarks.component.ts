@@ -6,6 +6,7 @@ import { ProductsService } from '../../products/services/products.service';
 import { ProductResponse } from '../../products/models/product-response';
 import { CurrencyPipe } from '../../../shared/pipes/currency.pipe';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
+import { CartProductsService } from '../../cart/services/cart-products.service';
 
 export interface BookmarkWithProduct extends BookmarkResponse {
   product: ProductResponse;
@@ -20,6 +21,7 @@ export interface BookmarkWithProduct extends BookmarkResponse {
 export class BookmarksComponent implements OnInit {
   private readonly bookmarkService = inject(BookmarksService);
   private readonly productService = inject(ProductsService);
+  private readonly cartService = inject(CartProductsService);
 
   readonly bookmarksWithProducts = signal<BookmarkWithProduct[]>([]);
   readonly isLoading = signal<boolean>(true);
@@ -74,5 +76,16 @@ export class BookmarksComponent implements OnInit {
           console.error('Failed to remove product', err);
         },
       });
+  }
+
+  addProductToCart(productId: string): void {
+    this.cartService.addProductToCart({ product_id: productId, product_quantity: 1 }).subscribe({
+      next: (res) => {
+        console.log('Product added to cart', res);
+      },
+      error: (err) => {
+        console.error('Failed to add product', err);
+      },
+    });
   }
 }
