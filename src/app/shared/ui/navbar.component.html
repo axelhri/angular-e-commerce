@@ -1,7 +1,11 @@
-<nav class="border-b-2 border-midnight">
+<nav class="border-b-2 border-midnight/40">
 
-  <div class="flex items-center justify-between border-b-2 border-midnight py-2 px-4">
+  <div class="flex items-center justify-between border-b-2 border-midnight/40 py-2 px-4 lg:w-[80vw] mx-auto lg:border-none">
     <img src="/neora.svg" alt="neora logo" class="w-32">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="hidden lg:block">
+      <input id="search" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 py-1 border-[0.150rem] w-100 rounded-full" />
+      <button type="submit" class="ml-2 bg-indigo text-white rounded-full px-3 py-1.5">Search</button>
+    </form>
     <div class="flex gap-3 items-center">
       <ng-icon name="bootstrapPerson" class="text-4xl opacity-80" [color]="'var(--color-midnight)'" />
       <ng-icon name="bootstrapSuitHeart" class="text-3xl opacity-80" [color]="'var(--color-midnight)'" />
@@ -9,18 +13,16 @@
     </div>
   </div>
 
-  <div class="flex">
-
-    <div class="flex flex-col gap-1 border-r-2 border-midnight p-2">
-      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl opacity-80"></p>
-      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl opacity-80"></p>
-      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl opacity-80"></p>
+  <div class="flex lg:hidden">
+    <div class="flex flex-col gap-1 border-r-2 border-midnight/40 p-3">
+      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl"></p>
+      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl"></p>
+      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl"></p>
     </div>
 
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="relative w-full">
-      <input id="search" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 py-2" />
-      <button type="submit"><ng-icon name="bootstrapSearch" class="text-2xl opacity-80 absolute right-2 top-2" [color]="'var(--color-midnight)'" /></button>
+      <input id="search" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 py-3" />
+      <button type="submit"><ng-icon name="bootstrapSearch" class="text-2xl opacity-80 absolute right-2 top-3" [color]="'var(--color-midnight)'" /></button>
     </form>
-
   </div>
 </nav>
