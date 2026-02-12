@@ -8,11 +8,13 @@ import {
   bootstrapCart3,
   bootstrapSearch,
 } from '@ng-icons/bootstrap-icons';
+import { CategoriesMenu } from '../../features/categories/components/categories-menu';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIcon, RouterLink],
+  imports: [ReactiveFormsModule, NgIcon, RouterLink, CategoriesMenu, CommonModule],
   providers: [
     provideIcons({ bootstrapPerson, bootstrapSuitHeart, bootstrapCart3, bootstrapSearch }),
   ],
@@ -25,6 +27,12 @@ export class NavbarComponent {
     search: new FormControl('', { nonNullable: true }),
   });
 
+  isMenuOpen = false;
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   onSearch(): void {
     const search = this.searchForm.controls.search.value.trim() || null;
 
@@ -32,5 +40,7 @@ export class NavbarComponent {
       queryParams: { search, page: 0 },
       queryParamsHandling: 'merge',
     });
+
+    this.isMenuOpen = false;
   }
 }
