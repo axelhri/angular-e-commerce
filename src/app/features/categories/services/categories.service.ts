@@ -8,7 +8,7 @@ import { CategoryResponse } from '../models/category-response';
 @Injectable({
   providedIn: 'root',
 })
-export class BookmarksService {
+export class CategoriesService {
   private readonly apiUrl = `${environment.apiUrl}categories`;
   private readonly http = inject(HttpClient);
 

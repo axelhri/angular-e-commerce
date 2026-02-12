@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { CategoriesMenu } from '../categories/components/categories-menu';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [CategoriesMenu],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {}

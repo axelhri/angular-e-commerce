@@ -1,0 +1,25 @@
+<section class="mt-10 flex flex-col gap-4">
+  <ng-template #recursiveList let-categories let-level="level">
+    @for (category of categories; track category.category_id) {
+      <div class="ml-4">
+
+        @if (level === 0) {
+          <p>parent : {{ category.category_name }}</p>
+        } @else {
+          <p>children : {{ category.category_name }}</p>
+        }
+
+
+        @if (category.children?.length > 0) {
+          <ng-container
+            *ngTemplateOutlet="recursiveList; context: { $implicit: category.children, level: level + 1 }">
+          </ng-container>
+        }
+      </div>
+    }
+  </ng-template>
+
+  <ng-container
+    *ngTemplateOutlet="recursiveList; context: { $implicit: categories(), level: 0 }">
+  </ng-container>
+</section>
