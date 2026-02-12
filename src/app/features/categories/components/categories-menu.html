@@ -1,17 +1,21 @@
 <section class="mt-10 flex flex-col gap-4">
-  <ng-template #recursiveList let-categories let-level="level">
+  <ng-template #recursiveList let-categories>
     @for (category of categories; track category.category_id) {
       <div (click)="toggleCategory(category); $event.stopPropagation()" class="ml-4">
-        @if (level === 0) {
-          <p>{{ category.category_name }}</p>
+
+        @if (category.children && category.children.length > 0) {
+          <div class="flex items-center gap-1 cursor-pointer">
+            <p>{{ category.category_name }}</p>
+            <ng-icon name="bootstrapChevronDown" [color]="'var(--color-midnight)'" />
+          </div>
         } @else {
-          <p>{{ category.category_name }}</p>
+          <p class="cursor-pointer">{{ category.category_name }}</p>
         }
 
         @if (category.children?.length > 0 && isOpened(category.category_id)) {
           <div class="border-l border-gray-300 ml-2">
             <ng-container
-              *ngTemplateOutlet="recursiveList; context: { $implicit: category.children, level: level + 1 }">
+              *ngTemplateOutlet="recursiveList; context: { $implicit: category.children }">
             </ng-container>
           </div>
         }
@@ -20,6 +24,6 @@
   </ng-template>
 
   <ng-container
-    *ngTemplateOutlet="recursiveList; context: { $implicit: categories(), level: 0 }">
+    *ngTemplateOutlet="recursiveList; context: { $implicit: categories() }">
   </ng-container>
 </section>

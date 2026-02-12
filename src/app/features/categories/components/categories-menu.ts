@@ -3,11 +3,14 @@ import { CategoryResponse } from '../models/category-response';
 import { CategoriesService } from '../services/categories.service';
 import { finalize } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { bootstrapChevronDown } from '@ng-icons/bootstrap-icons';
 
 @Component({
   selector: 'app-categories-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIcon],
+  providers: provideIcons({ bootstrapChevronDown }),
   templateUrl: './categories-menu.html',
 })
 export class CategoriesMenu implements OnInit {
