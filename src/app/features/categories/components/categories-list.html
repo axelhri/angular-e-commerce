@@ -1,3 +1,7 @@
-@for (category of categories(); track category.category_id) {
-  <p>{{ category.category_name }}</p>
-}
+<div class="border-b-2 border-midnight/80">
+  <div class="flex items-center gap-4 py-3 mx-auto w-fit">
+    @for (category of categories(); track category.category_id) {
+      <p class="text-lg text-midnight">{{ category.category_name }}</p>
+    }
+  </div>
+</div>
