@@ -10,11 +10,14 @@ import {
 } from '@ng-icons/bootstrap-icons';
 import { CategoriesMenu } from '../../features/categories/components/categories-menu';
 import { CommonModule } from '@angular/common';
+import { CategoriesList } from '../../features/categories/components/categories-list';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIcon, RouterLink, CategoriesMenu, CommonModule],
+  imports: [ReactiveFormsModule, NgIcon, RouterLink, CategoriesMenu, CommonModule, CategoriesList],
   providers: [
     provideIcons({ bootstrapPerson, bootstrapSuitHeart, bootstrapCart3, bootstrapSearch }),
   ],
@@ -26,6 +29,12 @@ export class NavbarComponent {
   readonly searchForm = new FormGroup({
     search: new FormControl('', { nonNullable: true }),
   });
+
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  readonly isDesktop$ = this.breakpointObserver
+    .observe('(min-width: 1024px)')
+    .pipe(map((result) => result.matches));
 
   isMenuOpen = false;
 
