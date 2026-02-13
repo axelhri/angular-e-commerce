@@ -5,7 +5,7 @@
       <img src="/neora.svg" alt="neora logo" class="w-32">
     </a>
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="hidden lg:block">
-      <input id="search" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 py-1 border-[0.150rem] border-midnight/80 xl:w-100 rounded-full" />
+      <input id="search-desktop" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 py-1 border-[0.150rem] border-midnight/80 xl:w-100 rounded-full" />
       <button type="submit" class="ml-2 bg-indigo text-white rounded-full px-3 py-1.5">Search</button>
     </form>
     <div class="flex gap-3 items-center">
@@ -44,7 +44,7 @@
     </button>
 
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="relative w-full">
-      <input id="search" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 pr-10 py-3 w-full" />
+      <input id="search-mobile" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 pr-10 py-3 w-full" />
       <button type="submit"><ng-icon name="bootstrapSearch" class="text-2xl opacity-80 absolute right-2 top-3" [color]="'var(--color-midnight)'" /></button>
     </form>
   </div>
