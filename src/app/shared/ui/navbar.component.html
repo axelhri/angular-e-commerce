@@ -21,11 +21,26 @@
     </div>
   </div>
 
-  <div class="flex lg:hidden" (click)="toggleMenu()">
+  <div class="flex lg:hidden items-center" (click)="toggleMenu()">
     <div class="flex flex-col gap-1 border-r-2 border-midnight/40 p-3">
-      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl"></p>
-      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl"></p>
-      <p class="w-7 border-[0.125rem] border-midnight rounded-4xl"></p>
+      <span
+        class="w-7 h-[2px] bg-midnight rounded-full transition-all duration-300"
+        [ngClass]="{
+          'rotate-45 translate-y-[6px]': isMenuOpen
+        }"
+      ></span>
+        <span
+          class="w-7 h-[2px] bg-midnight rounded-full transition-all duration-300"
+          [ngClass]="{
+          'opacity-0': isMenuOpen
+        }"
+        ></span>
+      <span
+        class="w-7 h-[2px] bg-midnight rounded-full transition-all duration-300"
+        [ngClass]="{
+        '-rotate-45 -translate-y-[6px]': isMenuOpen
+      }"
+      ></span>
     </div>
 
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="relative w-full">
