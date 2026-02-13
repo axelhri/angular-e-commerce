@@ -1,0 +1,34 @@
+<section class="mt-10 flex flex-col gap-4">
+  <ng-template #recursiveList let-categories>
+    @for (category of categories; track category.category_id) {
+      <div class="ml-4">
+
+        <button type="button" (click)="toggleCategory(category); $event.stopPropagation()" class="flex items-center gap-1 cursor-pointer">
+          <p>{{ category.category_name }}</p>
+
+          @if (category.children && category.children.length > 0) {
+            <ng-icon
+              name="bootstrapChevronDown"
+              [color]="'var(--color-midnight)'"
+              [class.rotate-180]="isOpened(category.category_id)"
+              class="transition-transform duration-300"
+            />
+          }
+
+        </button>
+
+        @if (category.children?.length > 0 && isOpened(category.category_id)) {
+          <div class="border-l border-gray-300 ml-2">
+            <ng-container
+              *ngTemplateOutlet="recursiveList; context: { $implicit: category.children }">
+            </ng-container>
+          </div>
+        }
+      </div>
+    }
+  </ng-template>
+
+  <ng-container
+    *ngTemplateOutlet="recursiveList; context: { $implicit: categories() }">
+  </ng-container>
+</section>
