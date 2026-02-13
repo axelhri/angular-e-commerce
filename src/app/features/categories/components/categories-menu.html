@@ -1,9 +1,9 @@
 <section class="mt-10 flex flex-col gap-4">
   <ng-template #recursiveList let-categories>
     @for (category of categories; track category.category_id) {
-      <div (click)="toggleCategory(category); $event.stopPropagation()" class="ml-4">
+      <div class="ml-4">
 
-        <div class="flex items-center gap-1 cursor-pointer">
+        <button type="button" (click)="toggleCategory(category); $event.stopPropagation()" class="flex items-center gap-1 cursor-pointer">
           <p>{{ category.category_name }}</p>
 
           @if (category.children && category.children.length > 0) {
@@ -15,7 +15,7 @@
             />
           }
 
-        </div>
+        </button>
 
         @if (category.children?.length > 0 && isOpened(category.category_id)) {
           <div class="border-l border-gray-300 ml-2">

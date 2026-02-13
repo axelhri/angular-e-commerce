@@ -21,8 +21,8 @@
     </div>
   </div>
 
-  <div class="flex lg:hidden items-center" (click)="toggleMenu()">
-    <div class="flex flex-col gap-1 border-r-2 border-midnight/80 p-3">
+  <div class="flex lg:hidden items-center">
+    <button type="button" class="flex flex-col gap-1 border-r-2 border-midnight/80 p-3" (click)="toggleMenu()">
       <span
         class="w-7 h-[2px] bg-midnight rounded-full transition-all duration-300"
         [ngClass]="{
@@ -41,14 +41,20 @@
         '-rotate-45 -translate-y-[6px]': isMenuOpen
       }"
       ></span>
-    </div>
+    </button>
 
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="relative w-full">
-      <input id="search" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 py-3" />
+      <input id="search" formControlName="search" type="text" placeholder="Search on Néora" class="px-4 pr-10 py-3 w-full" />
       <button type="submit"><ng-icon name="bootstrapSearch" class="text-2xl opacity-80 absolute right-2 top-3" [color]="'var(--color-midnight)'" /></button>
     </form>
   </div>
 </nav>
 
-<app-categories-menu *ngIf="isMenuOpen" class="lg:block"></app-categories-menu>
-<app-categories-list *ngIf="isDesktop$ | async" class="hidden lg:block"></app-categories-list>
+@if (isMenuOpen) {
+  <app-categories-menu class="lg:block"></app-categories-menu>
+}
+
+@if (isDesktop$ | async) {
+  <app-categories-list class="hidden lg:block"></app-categories-list>
+}
+
