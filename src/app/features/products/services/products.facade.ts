@@ -31,17 +31,20 @@ export class ProductsFacade {
       this.search.set(params.get('search') ?? '');
       this.page.set(Number(params.get('page') ?? 0));
 
-      this.load();
+      const categoryId = params.get('categoryId') ?? undefined;
+
+      this.load(categoryId);
     });
   }
 
-  private load(): void {
+  private load(categoryId?: string): void {
     this.loading.set(true);
     this.error.set(null);
 
     const apiRequest$ = this.productService.getProducts({
       search: this.search(),
       page: this.page(),
+      categoryId: categoryId, // 🔹 ajoute ici
     });
 
     zip(apiRequest$, this.minLoad$)
