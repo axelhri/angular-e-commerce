@@ -12,6 +12,7 @@ import { finalize } from 'rxjs';
 export class CategoriesList implements OnInit {
   private readonly categoriesService = inject(CategoriesService);
   readonly categories = signal<CategoryResponse[]>([]);
+  readonly hoveredCategoryId = signal<string | null>(null);
 
   ngOnInit(): void {
     this.categoriesService
@@ -26,5 +27,9 @@ export class CategoriesList implements OnInit {
           console.log('error');
         },
       });
+  }
+
+  setHovered(id: string | null): void {
+    this.hoveredCategoryId.set(id);
   }
 }
