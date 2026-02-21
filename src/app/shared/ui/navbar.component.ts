@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   bootstrapPerson,
@@ -12,7 +12,7 @@ import { CategoriesMenu } from '../../features/categories/components/categories-
 import { CommonModule } from '@angular/common';
 import { CategoriesList } from '../../features/categories/components/categories-list';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { map } from 'rxjs';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -37,6 +37,12 @@ export class NavbarComponent {
     .pipe(map((result) => result.matches));
 
   isMenuOpen = false;
+
+  constructor() {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.isMenuOpen = false;
+    });
+  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

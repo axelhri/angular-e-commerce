@@ -1,7 +1,47 @@
-<div class="border-b-2 border-midnight/80">
-  <div class="flex items-center gap-4 py-3 mx-auto w-fit">
+<div class="border-b-2 border-midnight/80 relative">
+
+  <div class="flex items-center gap-8 py-3 mx-auto w-fit">
+
     @for (category of categories(); track category.category_id) {
-      <p class="text-lg text-midnight">{{ category.category_name }}</p>
+      <p
+        class="text-lg text-midnight cursor-pointer hover:text-indigo transition"
+        (mouseenter)="setHovered(category.category_id)"
+      >
+        {{ category.category_name }}
+      </p>
     }
+
   </div>
+
 </div>
+
+@if (hoveredCategoryId()) {
+
+  <div
+    class="absolute left-0 w-full bg-white shadow-lg border-b border-gray-200 z-50"
+    (mouseleave)="setHovered(null)"
+  >
+    <div class="mx-auto w-[60vw] py-8">
+
+      @for (category of categories(); track category.category_id) {
+
+        @if (category.category_id === hoveredCategoryId() && category.children.length) {
+
+          <div class="grid grid-cols-4 gap-6">
+
+            @for (child of category.children; track child.category_id) {
+              <p class="hover:text-indigo cursor-pointer transition">
+                {{ child.category_name }}
+              </p>
+            }
+
+          </div>
+
+        }
+
+      }
+
+    </div>
+  </div>
+
+}
